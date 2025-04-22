@@ -10,6 +10,40 @@ import java.util.Map;
 @Mapper
 public interface UserMapper {
 
+    /*
+        MyBatis 参数传递，建议使用 @Param 修改 Map 集合中默认的键名！！！
+        MyBatis 参数封装：
+        - 单个参数：
+            1. POJO类型：直接使用，属性名 和 参数占位符名称 一致
+            2. Map集合：直接使用，键名 和 参数占位符名称 一致
+            3. Collection：封装为 Map 集合，可以使用 @Param 注解，替换 Map 集合中默认的 arg 键名
+                默认键名如下：
+                map.put("arg0",collection集合);
+                map.put("collection",collection集合);
+            4. List：封装为 Map 集合，可以使用 @Param 注解，替换 Map 集合中默认的 arg 键名
+                默认键名如下：
+                map.put("arg0",list集合);
+                map.put("collection",list集合);
+                map.put("list",list集合);
+            5. Array：封装为 Map 集合，可以使用 @Param 注解，替换 Map 集合中默认的 arg 键名（如批量删除地方就是用的 ids 替换了 array）
+                默认键名如下：
+                map.put("arg0",数组);
+                map.put("array",数组);
+            6. 其他类型：直接使用
+        - 多个参数：封装为 Map 集合,可以使用 @Param 注解，替换 Map 集合中默认的 arg 键名
+            默认键名如下：
+            map.put("arg0",参数值1)
+            map.put("param1",参数值1)
+            map.put("param2",参数值2)
+            map.put("agr1",参数值2)
+            -------- 使用了 @Param("username") 默认的将被修改为如下： --------
+            map.put("username",参数值1)
+            map.put("param1",参数值1)
+            map.put("param2",参数值2)
+            map.put("agr1",参数值2)
+     */
+
+
     /**
      * 查询所有列表，无查询条件
      */
