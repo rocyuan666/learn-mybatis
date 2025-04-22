@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "3da60667-929c-41f7-a09c-07d5e64ef854",
+		"name": "learn-mybatis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "查询列表-所有",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询详情",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询列表-多条件查询",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/listSearch?age=8&sex=0&nickName=张",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"listSearch"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "8"
+						},
+						{
+							"key": "sex",
+							"value": "0"
+						},
+						{
+							"key": "nickName",
+							"value": "张"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询列表-单条件查询",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/listSearchSingle?field=nickName&value=大",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"listSearchSingle"
+					],
+					"query": [
+						{
+							"key": "field",
+							"value": "nickName"
+						},
+						{
+							"key": "value",
+							"value": "大"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"wangwu\",\r\n    \"password\":\"mima\",\r\n    \"nickName\":\"王五\",\r\n    \"sex\":1,\r\n    \"age\":26,\r\n    \"avatar\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "更新",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 16,\r\n    \"userName\":\"wangwuwu\",\r\n    \"password\":\"mima\",\r\n    \"nickName\":\"王五五\",\r\n    \"sex\":1,\r\n    \"age\":18,\r\n    \"avatar\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "删除",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/deleteById?id=18",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteById"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "18"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "批量删除",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/deleteByIds?ids=16,17",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"deleteByIds"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "16,17"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
