@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.rocyuan.mapper.UserMapper">
+
+    <!-- 映射 -->
+    <resultMap id="userResultMap" type="User">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="add_time" property="addTime"/>
+        <result column="update_time" property="updateTime"/>
+        <!-- 字段 与 属性值 一样的可以不写 -->
+        <!-- <result column="sex" property="sex"/> -->
+        <!-- <result column="age" property="age"/> -->
+        <!-- <result column="password" property="password"/> -->
+        <!-- <result column="avatar" property="avatar"/> -->
+    </resultMap>
+
+    <!-- sql 片段 配合 include 使用 -->
+    <sql id="userColum">
+        id
+        , user_name, password, nick_name, sex, age, avatar, add_time, update_time
+    </sql>
+
+    <!--
+    ======================== 查询所有数据 ============================
+     -->
+    <!-- 使用了 resultMap 不需要指定 resultType="User"  -->
+    <select id="selectAll" resultMap="userResultMap">
+        select
+        <include refid="userColum"/>
+        from roc_user;
+    </select>
+
+    <!--
+    ======================== 查询详情 ============================
+     -->
+    <!-- 查询详情（单条件查询） parameterType="int" 可省略 -->
+    <select id="selectById" resultMap="userResultMap">
+        select
+        <include refid="userColum"/>
+        from roc_user where id = #{id};
+    </select>
+
+    <!--
+    特殊字符处理：
+    1. 转义字符 如：&lt; == <
+    2. CDATA区
+     -->
+    <!-- <select id="selectById" resultMap="userResultMap"> -->
+    <!--     select -->
+    <!--     <include refid="userColum"/> -->
+    <!--     from roc_user where id -->
+    <!--     <![CDATA[ -->
+    <!--     < -->
+    <!--     ]]> -->
+    <!--     #{id}; -->
+    <!-- </select> -->
+
+    <!--
+    ======================== 多条件查询（存在BUG：必须要传递指定的参数） ============================
+    Mapper 接口传参方式不同，分为：
+    1. 散装参数 @Param 方式
+    2. User 实体类方式
+    3. Map 方式
+     -->
+    <!-- <select id="selectByCondition" resultMap="userResultMap"> -->
+    <!--     select -->
+    <!--     <include refid="userColum"/> -->
+    <!--     from roc_user -->
+    <!--     where age > #{age} -->
+    <!--     and sex = #{sex} -->
+    <!--     and nick_name like #{nickName}; -->
+    <!-- </select> -->
+
+    <!--
+    ======================== 多条件动态查询（解决上方BUG） ============================
+    动态 sql 文档：https://mybatis.org/mybatis-3/zh_CN/dynamic-sql.html
+    Mapper 接口传参方式使用：2、3
+    if 标签; where 标签 动态处理 sql where 关键字后 and/or 等语法问题
+     -->
+    <select id="selectByCondition" resultMap="userResultMap">
+        select
+        <include refid="userColum"/>
+        from roc_user
+        <where>
+            <if test="age != null">
+                and age > #{age}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name like #{nickName}
+            </if>
+        </where>
+    </select>
+
+    <!--
+    ======================== 单条件动态查询（指定字段的内容查询） ============================
+    动态 sql 文档：https://mybatis.org/mybatis-3/zh_CN/dynamic-sql.html
+    choose、when, otherwise 标签; where 标签 动态处理 sql where 关键字后 and/or 等语法问题
+    类似
+    switch、case、default 语句
+     -->
+    <select id="selectByConditionSingle" resultMap="userResultMap">
+        select
+        <include refid="userColum"/>
+        from roc_user
+        <where>
+            <choose>
+                <when test="age != null">
+                    age > #{age}
+                </when>
+                <when test="sex != null">
+                    sex = #{sex}
+                </when>
+                <when test="nickName != null and nickName != ''">
+                    nick_name like #{nickName}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+
+    <!--
+    ======================== 添加 ============================
+    添加完返回该条数据的 id useGeneratedKeys="true" keyProperty="id"
+     -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into roc_user (user_name, password, nick_name, sex, age, avatar, add_time, update_time)
+        values (#{userName}, #{password}, #{nickName}, #{sex}, #{age}, #{avatar}, #{addTime}, #{updateTime});
+    </insert>
+
+    <!--
+    ======================== 修改（存在BUG：没有传某个字段时，该字段会被修改为null） ============================
+     -->
+    <!-- <update id="update"> -->
+    <!--     update roc_user -->
+    <!--     set user_name   = #{userName}, -->
+    <!--         password    = #{password}, -->
+    <!--         nick_name   = #{nickName}, -->
+    <!--         sex         = #{sex}, -->
+    <!--         age         = #{age}, -->
+    <!--         avatar      = #{avatar}, -->
+    <!--         add_time    = #{addTime}, -->
+    <!--         update_time = #{updateTime} -->
+    <!--     where id = ${id} -->
+    <!-- </update> -->
+
+    <!--
+    ======================== 修改（解决上方BUG，动态修改字段） ============================
+     -->
+    <update id="update">
+        update roc_user
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="addTime != null and addTime != ''">
+                add_time = #{addTime},
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+
+    <!--
+    ======================== 删除 ============================
+     -->
+    <delete id="deleteById">
+        delete
+        from roc_user
+        where id = #{id}
+    </delete>
+
+    <!--
+    ======================== 批量删除 ============================
+    foreach 标签
+    collection: 默认 array, 在 Mapper 接口中使用注解 @Param("ids") 指定
+    item: 每一项的变量
+    separator: 使用什么分割
+    open: 使用 foreach 标签 开始拼接的字符串
+    close: 使用 foreach 标签 结束拼接的字符串
+     -->
+    <delete id="deleteByIds">
+        delete
+        from roc_user
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!-- 未使用 open close 效果 -->
+    <!-- <delete id="deleteByIds"> -->
+    <!--     delete -->
+    <!--     from roc_user -->
+    <!--     where id in( -->
+    <!--     <foreach collection="ids" item="id" separator=","> -->
+    <!--         #{id} -->
+    <!--     </foreach> -->
+    <!--     ) -->
+    <!-- </delete> -->
+</mapper>
