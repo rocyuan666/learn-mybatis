@@ -1,7 +1,6 @@
 package top.rocyuan.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 import top.rocyuan.entity.User;
 
 import java.util.ArrayList;
@@ -53,6 +52,19 @@ public interface UserMapper {
      * 查询详情
      */
     User selectById(int id);
+
+    /**
+     * 查询详情（注解方式）
+     * 注解方式不常用！！！
+     * 分为：
+     * @Select("sql")
+     * @Insert("sql")
+     * @Delete("sql")
+     * @Update("sql")
+     *
+     */
+    @Select("select id, user_name as userName, password, nick_name as nickName, avatar, sex, age, add_time as addTime, update_time as updateTime from roc_user where id = #{id}")
+    User selectByIdAnnotation(int id);
 
     /**
      * 查询列表 多条件查询

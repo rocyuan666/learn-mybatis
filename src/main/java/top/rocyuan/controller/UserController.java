@@ -28,7 +28,8 @@ public class UserController {
     // 查询详情
     @GetMapping("/detail")
     public User detail(int id) {
-        return userMapper.selectById(id);
+        // return userMapper.selectById(id);
+        return userMapper.selectByIdAnnotation(id);
     }
 
     // 查询列表-多条件查询（3种方式）
