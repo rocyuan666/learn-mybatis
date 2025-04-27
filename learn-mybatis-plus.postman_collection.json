@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "e03f7deb-ba13-4ba2-98df-8ad1d7dea2f0",
+		"name": "learn-mybatis-plus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "查询列表-所有",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userplus/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询详情",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userplus/detail?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询列表-多条件查询",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userplus/listSearch?age=8&sex=0&nickName=大",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"listSearch"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "8"
+						},
+						{
+							"key": "sex",
+							"value": "0"
+						},
+						{
+							"key": "nickName",
+							"value": "大"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询列表-单条件查询",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userplus/listSearchSingle?field=nickName&value=李",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"listSearchSingle"
+					],
+					"query": [
+						{
+							"key": "field",
+							"value": "nickName"
+						},
+						{
+							"key": "value",
+							"value": "李"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"wangwu\",\r\n    \"password\":\"mima\",\r\n    \"nickName\":\"王五plus\",\r\n    \"sex\":1,\r\n    \"age\":26,\r\n    \"avatar\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/userplus/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "更新",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 21,\r\n    \"userName\":\"wangwuwu\",\r\n    \"password\":\"mima\",\r\n    \"nickName\":\"王五五\",\r\n    \"sex\":1,\r\n    \"age\":18,\r\n    \"avatar\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/userplus/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "删除",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userplus/deleteById?id=21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"deleteById"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "批量删除",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/userplus/deleteByIds?ids=6,7,20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"userplus",
+						"deleteByIds"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "6,7,20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
